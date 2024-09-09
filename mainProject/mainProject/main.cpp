@@ -5198,9 +5198,6 @@ void drawElevatorStand(wchar_t  x[][1190], Elevator& elevator){
 }
 
 void moveElevator(wchar_t  x[][1190], Elevator& elevator, Hero& hero){
-    int r=elevator.rb;
-
-     int i;
     
 
     if(elevator.frames%15==0){
@@ -5568,7 +5565,7 @@ int main() {
        
             else{
                 
-                if(hero.flagGump==1){
+                if(hero.flagGump==1 || hero.flagGumpLft==1|| hero.flagGumpRight==1){
    
                     drawHeroJump(x, hero);
                 }
@@ -5611,7 +5608,7 @@ int main() {
             
             jumpHero(x, hero, isFalling);
             jumpHeroRight(x, hero, isFalling);
-            jumpHeroLft(x, hero, isFalling);
+           
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
             drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy);
