@@ -1,5 +1,4 @@
 mainProject/mainProject.xcodeproj/xcuserdata/
-
-
-
+#Ignore system file.
+.DS_Store
 *.xcuserstate
