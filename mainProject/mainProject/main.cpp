@@ -5276,10 +5276,10 @@ void drawPlane(wchar_t x[][1190], Hero & hero){
     int c=120+35*5;
     
     for(i=0;i<3;i++){
-      x[r+0][c+46+i]='_';
+      x[r+0][c+36+i]='_';
      }
-   x[r+0][c+49]='-';
-   x[r+0][c+50]='(';
+   x[r+0][c+40]='-';
+   x[r+0][c+41]='(';
    x[r+1][c+0]='_';
    x[r+1][c+33]='_';
    x[r+1][c+34]='(';
@@ -5292,13 +5292,13 @@ void drawPlane(wchar_t x[][1190], Hero & hero){
       x[r+2][c+0+i]=92;
      }
     for(i=0;i<2;i++){
-      x[r+2][c+41+i]='/';
+      x[r+2][c+32+i]='/';
      }
     for(i=0;i<2;i++){
       x[r+3][c+1+i]=92;
      }
     for(i=0;i<2;i++){
-      x[r+3][c+40+i]='/';
+      x[r+3][c+31+i]='/';
      }
     for(i=0;i<2;i++){
       x[r+4][c+2+i]=92;
@@ -5528,7 +5528,7 @@ int main() {
             drawBlocker(x);
 
             
-            drawLaser(x, laser);
+//            drawLaser(x, laser);
             drawElevatorStand(x, elevator);
             moveElevator(x, elevator, hero);
             drawElevator(x, elevator);
@@ -5567,7 +5567,7 @@ int main() {
                 bat.frames++;
 //                if(bat.rBullet<=hero.rherob-1 &&bat.rBullet+1>=hero.rheroe && bat.cBullet>=hero.cherob-2 &&bat.cBullet<=hero.cheroe+2){
 //                    hero.health--;
-//                    
+//
 //                }
                 
                 
