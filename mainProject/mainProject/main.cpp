@@ -1934,7 +1934,7 @@ void drawPortal2(wchar_t x[][1190], Hero &hero){
     x[r+5][c+5]='|';
     x[r+6][c+5]='|';
     
-    if( hero.cheroe<=40+20 &&hero.rherob>=50 &&hero.rheroe<=100 && hero.cheroe>=40-7 &&hero.cherob<=40+20 &&hero.cherob>=40-7 ){
+    if(hero.rherob>=20 &&hero.rheroe<=110 &&hero.cherob>=20 && hero.cherob<=50){
         //c=21;
         //r=15;
         
@@ -3773,10 +3773,14 @@ int AntiGravity(wchar_t x[][1190], Hero& hero){
     int c;
     int f=0;
     for(c=hero.cherob+4;c<=hero.cheroe-4;c++){
-        if(x[hero.rherob-1][c]!=' '){
+
+        
+         if(x[hero.rherob-1][c]!=' '){
             f=1;
         }
+        
     }
+
     if(f){
         return 0;
 
@@ -3788,7 +3792,7 @@ int AntiGravity(wchar_t x[][1190], Hero& hero){
 
 
 void checkHealth(wchar_t x[][1190], Hero &hero, wchar_t sim, Hero2&hero2, int whichHero){
-    int i,j;
+    int i;
     if(whichHero==1){
         for(i=hero.cherob;i<=hero.cheroe;i++){
             if(x[hero.rherob-1][i]==sim){
@@ -5414,8 +5418,6 @@ int main() {
     int ctBullets=0;
     Bullet * bullet = NULL;
     int flagDraw=0;
-   
-
     wchar_t x[222][1190];
     i=0;
     Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0};
@@ -5555,26 +5557,19 @@ int main() {
             
          
            
-  
+            if(hero.flagGump!=1 && hero.flagGumpRight!=1 && hero.flagGumpLft!=1 ){
                 if(hero.flagShooting && hero.inAirplane==0){
-                        mainShooting(x, hero);
-                        gunWithSmoke(x, hero);
-                 
+                    mainShooting(x, hero);
+                    gunWithSmoke(x, hero);
+                    
                 }
-            
-       
-            else{
                 
-                if(hero.flagGump==1 || hero.flagGumpLft==1|| hero.flagGumpRight==1){
-   
-                    drawHeroJump(x, hero);
-                }
                 else{
                     if(hero.isWalking){
                         
                         walkingMain(x, hero);
                         
-                   
+                        
                     }
                     else{
                         if(hero.cherob>=120+35*4 &&hero.cherob<=120+35*7 &&hero.rherob>70 &&hero.rheroe<=120 ){
@@ -5583,14 +5578,16 @@ int main() {
                             
                         }
                         else{
+                            
                             drawHero(x, hero);
                             drawPlane(x, hero);
+                            
                         }
                         
                     }
                     
                 }
-       
+                
             }
        
             if(ctBullets){
@@ -5608,6 +5605,11 @@ int main() {
             
             jumpHero(x, hero, isFalling);
             jumpHeroRight(x, hero, isFalling);
+            jumpHeroLft(x, hero, isFalling);
+            if(hero.flagGump==1 || hero.flagGumpRight==1 || hero.flagGumpLft==1){
+
+                drawHeroJump(x, hero);
+            }
            
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
@@ -5668,7 +5670,7 @@ int main() {
                 hero.cheroe=120+35*3+16;
             }
             else{
-                if(move=='t' &&hero2.r>=startoOfScreen2+10 ){
+                if(move=='t' &&hero2.r>=startoOfScreen2+15 ){
                 
                     hero2.r-=2;
                 }
@@ -5687,7 +5689,7 @@ int main() {
                     hero.rherob-=2;
                     hero.rheroe-=2;
                 }
-                if(move=='g'&& hero.rheroe>100 ){
+                if(move=='g'&& hero.rheroe<98 ){
                 
                     hero.rherob+=2;
                     hero.rheroe+=2;
