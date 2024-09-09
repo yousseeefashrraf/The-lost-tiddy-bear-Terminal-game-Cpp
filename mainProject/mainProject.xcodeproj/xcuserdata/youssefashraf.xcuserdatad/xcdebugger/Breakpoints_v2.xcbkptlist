@@ -14,9 +14,9 @@
             filePath = "mainProject/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2013"
-            endingLineNumber = "2013"
-            landmarkName = "drawHeroInRev(, hero)"
+            startingLineNumber = "2032"
+            endingLineNumber = "2032"
+            landmarkName = "drawPortal2(, hero)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

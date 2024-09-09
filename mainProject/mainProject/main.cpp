@@ -30,6 +30,7 @@ struct Hero {
     int health;
     int inAirplane;
     int inLadder;
+    int walkingFrames2;
 };
 struct Hero2{
     int r;
@@ -1322,7 +1323,7 @@ void moveEnemy(wchar_t x[][1190], Enemy & enemy){
 
 
 
-void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfScreen2, Bat& bat, Enemy &enemy){
+void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfScreen2, Bat& bat, Enemy &enemy, Enemy &enemy2){
     int i,j;
     for(i=startOfScreen2;i<startOfScreen2+10;i++){
         for(j=startOfScreen;j<startOfScreen+238;j++){
@@ -1484,6 +1485,24 @@ void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfSc
             c+=10;
         }
     }
+    if(enemy2.health!=0){
+        r=enemy2.rb-5;
+        c=enemy2.cb-10;
+        for(j=0;j<enemy2.health;j++){
+            x[r+0][c+1]='^';
+             for(i=0;i<2;i++){
+               x[r+0][c+2+i]='.';
+              }
+            x[r+0][c+4]='^';
+            x[r+1][c+1]=92;
+            x[r+1][c+4]='/';
+            x[r+2][c+2]=92;
+            x[r+2][c+3]='/';
+            
+            c+=10;
+        }
+    }
+
 }
 
 void drawMastabaWithLadder(wchar_t x[][1190]){
@@ -4765,6 +4784,7 @@ void walking2InRev(wchar_t x[][1190], Hero & hero){
      int i;
    
 
+    
     x[r+0][c+10]='_';
      for(i=0;i<2;i++){
        x[r+0][c+11+i]='-';
@@ -4837,49 +4857,43 @@ void walking2InRev(wchar_t x[][1190], Hero & hero){
        x[r+10][c+22+i]='-';
       }
     x[r+10][c+24]='/';
-    x[r+11][c+11]='/';
-    x[r+11][c+12]=92;
-    x[r+11][c+17]='_';
-    x[r+11][c+18]='-';
-    x[r+11][c+20]='.';
-    x[r+11][c+21]=39;
-    x[r+12][c+10]='/';
-    x[r+12][c+13]=92;
-    x[r+12][c+16]='/';
+    x[r+11][c+10]='/';
+    x[r+11][c+13]=92;
+    x[r+11][c+16]='/';
+    x[r+11][c+20]='!';
+    x[r+12][c+5]='_';
+    x[r+12][c+6]='.';
+    x[r+12][c+9]='/';
+    x[r+12][c+15]='-';
+    x[r+12][c+17]='!';
     x[r+12][c+20]='!';
-    x[r+13][c+5]='_';
-    x[r+13][c+6]='.';
-    x[r+13][c+9]='/';
-    x[r+13][c+15]='-';
-    x[r+13][c+17]='!';
-    x[r+13][c+20]='!';
-    x[r+14][c+4]='(';
-    x[r+14][c+8]=92;
-    x[r+14][c+13]='_';
-    x[r+14][c+14]='-';
+    x[r+13][c+4]='(';
+    x[r+13][c+8]=92;
+    x[r+13][c+13]='_';
+    x[r+13][c+14]='-';
      for(i=0;i<2;i++){
-       x[r+14][c+16+i]='_';
+       x[r+13][c+16+i]='_';
       }
-    x[r+14][c+18]=92;
-    x[r+14][c+22]=92;
-    x[r+15][c+5]=92;
-    x[r+15][c+10]='.';
-    x[r+15][c+11]=39;
+    x[r+13][c+18]=92;
+    x[r+13][c+22]=92;
+    x[r+14][c+5]=92;
+    x[r+14][c+10]='.';
+    x[r+14][c+11]=39;
      for(i=0;i<2;i++){
+       x[r+14][c+15+i]='_';
+      }
+    x[r+14][c+18]='/';
+    x[r+14][c+22]='/';
+    x[r+15][c+6]=92;
+     for(i=0;i<2;i++){
+       x[r+15][c+7+i]='_';
+      }
+    x[r+15][c+9]='/';
+    x[r+15][c+14]='(';
+     for(i=0;i<7;i++){
        x[r+15][c+15+i]='_';
       }
-    x[r+15][c+18]='/';
-    x[r+15][c+22]='/';
-    x[r+16][c+6]=92;
-     for(i=0;i<2;i++){
-       x[r+16][c+7+i]='_';
-      }
-    x[r+16][c+9]='/';
-    x[r+16][c+14]='(';
-     for(i=0;i<7;i++){
-       x[r+16][c+15+i]='_';
-      }
-    x[r+16][c+22]=')';
+    x[r+15][c+22]=')';
 }
 
 void walking3(wchar_t x[][1190], Hero & hero){
@@ -5172,11 +5186,11 @@ void walkingMain(wchar_t x[][1190], Hero & hero){
 
 void walkingMainInRev(wchar_t x[][1190], Hero & hero){
     
-    if(hero.walkingFrames<30){
+    if(hero.walkingFrames2<30){
        
         if(checkNoObstacle(x, hero, hero.dir) ){
             walking2InRev(x, hero);
-            if(hero.walkingFrames==29){
+            if(hero.walkingFrames2==29){
                 hero.cherob-=4;
                 hero.cheroe-=4;
             }
@@ -5184,20 +5198,20 @@ void walkingMainInRev(wchar_t x[][1190], Hero & hero){
         }
     }
     
-    if(hero.walkingFrames<60 && hero.walkingFrames>30){
+    if(hero.walkingFrames2<60 && hero.walkingFrames2>30){
         walking3InRev(x, hero);
         if(checkNoObstacle(x, hero, hero.dir)){
           
-            if(hero.walkingFrames==30){
+            if(hero.walkingFrames2==30){
                 hero.cherob-=4;
                 hero.cheroe-=4;
             }
             
         }
     }
-    hero.walkingFrames++;
-    if(hero.walkingFrames>=60){
-        hero.walkingFrames=0;
+    hero.walkingFrames2++;
+    if(hero.walkingFrames2>=60){
+        hero.walkingFrames2=0;
         hero.isWalking=0;
         
     }
@@ -5215,6 +5229,7 @@ void moveHero(wchar_t x[][1190], Hero& hero, char  move, int f, Elevator& elevat
     {
         
         hero.dir=-1;
+
          hero.isWalking=1;
      
         for(int i=0;i<4;i++){
@@ -5801,7 +5816,7 @@ int main() {
     int flagDraw=0;
     wchar_t x[222][1190];
     i=0;
-    Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0};
+    Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0,0};
     Elevator elevator ={120,112,718,718,0, -1};
     Laser laser ={0,-1,105,143};
     Hero2 hero2={98,118+35*5};
@@ -5824,6 +5839,14 @@ int main() {
     enemy.dir=1;
     enemy.frames=0;
     enemy.health=10;
+    
+    Enemy enemy2;
+    enemy2.rb=66;
+    enemy2.cb=640;
+    enemy2.dir=1;
+    enemy2.frames=0;
+    enemy2.health=5;
+    
     initializechar(x);
 
 
@@ -5869,6 +5892,41 @@ int main() {
                         
                     
                     enemy.frames++;
+                }
+            }
+            if(enemy2.health!=0){
+                
+                if(enemy2.dir==-1){
+                    drawEnemyLft(x, enemy2);
+                }
+                if(enemy2.dir==1){
+                    drawEnemyRight(x, enemy2);
+                }
+             
+                    
+                        checkEnemyDie(x, hero, bullet, ctBullets,  endOfScreen, enemy2);
+                        
+                        moveEnemy(x, enemy2);
+                        enemy2.frames++;
+                    
+                    
+                    
+                    
+                    
+                    if(enemy2.rb>=hero.rherob-17 &&enemy2.rb<=hero.rheroe+7 &&  enemy2.cb>=hero.cherob-10 &&enemy2.cb<=hero.cheroe+5){
+                        enemy2.dir*=-1;
+                        enemy2.cb+=enemy2.dir;
+                        
+                        hero.health--;
+                        hero.cherob-=20;
+                        hero.cheroe-=20;
+                        if(enemy2.frames==690000+250){
+                            enemy2.frames=0;
+                        }
+                        
+                        
+                    
+                    enemy2.frames++;
                 }
             }
             if(bat.health==0){
@@ -5965,6 +6023,7 @@ int main() {
                             if(hero.dir==1)
                             drawHero(x, hero);
                             else
+                                if(hero.dir==-1)
                                 drawHeroInRev(x, hero);
                             drawPlane(x, hero);
                             
@@ -5999,7 +6058,7 @@ int main() {
            
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
-            drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy);
+            drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy,enemy2);
             printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);
             usleep(100);
             
