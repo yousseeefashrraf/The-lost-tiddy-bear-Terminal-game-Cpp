@@ -1934,7 +1934,7 @@ void drawPortal2(wchar_t x[][1190], Hero &hero){
     x[r+5][c+5]='|';
     x[r+6][c+5]='|';
     
-    if( hero.cheroe<=40+20 &&hero.rherob>=50 &&hero.rheroe<=100 && hero.cheroe>=40-7 &&hero.cherob<=40+20 &&hero.cherob>=40-7 ){
+    if(hero.rherob>=20 &&hero.rheroe<=110 &&hero.cherob>=20 && hero.cherob<=50){
         //c=21;
         //r=15;
         
@@ -3773,10 +3773,14 @@ int AntiGravity(wchar_t x[][1190], Hero& hero){
     int c;
     int f=0;
     for(c=hero.cherob+4;c<=hero.cheroe-4;c++){
-        if(x[hero.rherob-1][c]!=' '){
+
+        
+         if(x[hero.rherob-1][c]!=' '){
             f=1;
         }
+        
     }
+
     if(f){
         return 0;
 
@@ -3788,7 +3792,7 @@ int AntiGravity(wchar_t x[][1190], Hero& hero){
 
 
 void checkHealth(wchar_t x[][1190], Hero &hero, wchar_t sim, Hero2&hero2, int whichHero){
-    int i,j;
+    int i;
     if(whichHero==1){
         for(i=hero.cherob;i<=hero.cheroe;i++){
             if(x[hero.rherob-1][i]==sim){
@@ -4498,7 +4502,7 @@ void checkBatDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, 
     }
 }
 
-void checkEnemyDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, int endOfScreen,Enemy &enemy, int cBullet, int rBullet){
+void checkEnemyDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, int endOfScreen,Enemy &enemy){
     for(int i=0; i<ctBullets;i++){
         
        
@@ -4513,12 +4517,7 @@ void checkEnemyDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets
             
         }
         
-        if( cBullet-1>=enemy.cb-10){
-            enemy.health--;
-            enemy.cb+=enemy.dir*2;
-            if(enemy.health==0){
-                hero.health++;
-            }
+        
             enemy.frames=690000+150;
             
         }
@@ -4526,7 +4525,7 @@ void checkEnemyDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets
     
         
     }
-}
+
 
 
 void mainShooting(wchar_t x[][1190], Hero & hero){
@@ -4931,7 +4930,15 @@ void moveHero(wchar_t x[][1190], Hero& hero, char  move, int f, Elevator& elevat
                         }
                         
                         else{
-                            if(move=='n' &&   hero.flagInElevator==1){
+                            if(move=='n')
+                                if(hero.cherob>=735 && hero.cherob<=770 && hero.rherob>=elevator.rb && hero.rherob<=elevator.rb+22&& hero.flagInElevator==0){
+                                    hero.cherob=elevator.cb+5;
+                                    hero.cheroe=elevator.cb+5+16;
+                                    hero.rherob=elevator.rb+2;
+                                    hero.rheroe=elevator.rb+2+15;
+                                    hero.flagInElevator=1;
+                                }
+                            if(hero.flagInElevator==1 && hero.rherob<130 && hero.rherob>100){
                                 
                                 hero.cherob=elevator.cb-33;
                                 hero.cheroe=elevator.cb-33+16;
@@ -5195,9 +5202,6 @@ void drawElevatorStand(wchar_t  x[][1190], Elevator& elevator){
 }
 
 void moveElevator(wchar_t  x[][1190], Elevator& elevator, Hero& hero){
-    int r=elevator.rb;
-
-     int i;
     
 
     if(elevator.frames%15==0){
@@ -5244,31 +5248,7 @@ void moveElevator(wchar_t  x[][1190], Elevator& elevator, Hero& hero){
 }
 
 
-void moveBulletSingle(wchar_t x[][1190], Hero & hero, int rBullet, int &cBullet, int endOfScreen,int& flagDraw){
-    
-    if(x[rBullet][cBullet+3] ==' ' && cBullet<=1190){
-        cBullet++;
-        flagDraw=1;
-    }
-    else{
-        flagDraw=0;
-    }
 
-
-}
-
-void drawBulletSingle(wchar_t x[][1190], Hero & hero,int r, int c,int dir){
-  
-    
-    if(dir==1){
-        x[r][c]=x[r][c+1]=':';
-        x[r][c+2]='>';
-    }
-    if(dir==-1){
-        x[r][c]=x[r][c-1]=':';
-        x[r][c-2]='<';
-    }
-}
 
 void drawPlane(wchar_t x[][1190], Hero & hero){
     int i;
@@ -5437,15 +5417,7 @@ int main() {
     int endOfScreen2    = 148;
     int ctBullets=0;
     Bullet * bullet = NULL;
-    
-    int FSingleBullet=0;
-    int cBullet;
-    int rBullet;
-    int FSHootSingle=0;
-    int dirSingleBullet=1;
     int flagDraw=0;
-   
-
     wchar_t x[222][1190];
     i=0;
     Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0};
@@ -5493,7 +5465,7 @@ int main() {
                 }
              
                     
-                        checkEnemyDie(x, hero, bullet, ctBullets,  endOfScreen, enemy, cBullet, rBullet);
+                        checkEnemyDie(x, hero, bullet, ctBullets,  endOfScreen, enemy);
                         
                         moveEnemy(x, enemy);
                         enemy.frames++;
@@ -5504,7 +5476,7 @@ int main() {
                     
                     if(enemy.rb>=hero.rherob-17 &&enemy.rb<=hero.rheroe+7 &&  enemy.cb>=hero.cherob-10 &&enemy.cb<=hero.cheroe+5){
                         enemy.dir*=-1;
-                        enemy.cb+=enemy.dir*5;
+                        enemy.cb+=enemy.dir;
                         
                         hero.health--;
                         hero.cherob-=20;
@@ -5585,26 +5557,19 @@ int main() {
             
          
            
-  
+            if(hero.flagGump!=1 && hero.flagGumpRight!=1 && hero.flagGumpLft!=1 ){
                 if(hero.flagShooting && hero.inAirplane==0){
-                        mainShooting(x, hero);
-                        gunWithSmoke(x, hero);
-                 
+                    mainShooting(x, hero);
+                    gunWithSmoke(x, hero);
+                    
                 }
-            
-       
-            else{
                 
-                if(hero.flagGump==1){
-   
-                    drawHeroJump(x, hero);
-                }
                 else{
                     if(hero.isWalking){
                         
                         walkingMain(x, hero);
                         
-                   
+                        
                     }
                     else{
                         if(hero.cherob>=120+35*4 &&hero.cherob<=120+35*7 &&hero.rherob>70 &&hero.rheroe<=120 ){
@@ -5613,14 +5578,16 @@ int main() {
                             
                         }
                         else{
+                            
                             drawHero(x, hero);
                             drawPlane(x, hero);
+                            
                         }
                         
                     }
                     
                 }
-       
+                
             }
        
             if(ctBullets){
@@ -5634,28 +5601,21 @@ int main() {
                 }
             }
             
-            if(FSHootSingle && hero.inAirplane==0){
-                mainShooting(x, hero);
-                if(flagDraw){
-                    drawBulletSingle(x, hero, rBullet, cBullet,dirSingleBullet);
-                    
-                }
-                
-             
-                    moveBulletSingle(x, hero,  rBullet,  cBullet,  endOfScreen, flagDraw);
-                
-               
-                
-            }
         
             
             jumpHero(x, hero, isFalling);
             jumpHeroRight(x, hero, isFalling);
             jumpHeroLft(x, hero, isFalling);
+            if(hero.flagGump==1 || hero.flagGumpRight==1 || hero.flagGumpLft==1){
+
+                drawHeroJump(x, hero);
+            }
+           
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
             drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy);
-            printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);            usleep(100);
+            printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);
+            usleep(100);
             
             
             
@@ -5668,10 +5628,15 @@ int main() {
         }
         char move = getchar ();
         if(move=='z'){
-            if(ctBullets==0){
-                bullet = new Bullet[ctBullets];
+            
+            Bullet *newBullet = new Bullet[ctBullets+1];
+            for (int i = 0; i < ctBullets; i++) {
+                    newBullet [i] = bullet[i];
+                }
+                delete[] bullet;
+                bullet = newBullet;
                 hero.flagShooting=1;
-            }
+            
            
                 bullet[ctBullets].dir=hero.dir;
                 bullet[ctBullets].stopBullet=0;
@@ -5692,15 +5657,6 @@ int main() {
             
         }
         
-        if(move =='x'){
-            FSHootSingle=1;
-            rBullet=hero.rherob+8;
-          
-            cBullet=  hero.cherob+27;
-        }
-        else{
-            FSHootSingle=0;
-        }
         
         if(hero.inAirplane==0){
             moveHero(x, hero, move, isFalling, elevator);
@@ -5714,7 +5670,7 @@ int main() {
                 hero.cheroe=120+35*3+16;
             }
             else{
-                if(move=='t' &&hero2.r>=startoOfScreen2+20 ){
+                if(move=='t' &&hero2.r>=startoOfScreen2+15 ){
                 
                     hero2.r-=2;
                 }
@@ -5733,7 +5689,7 @@ int main() {
                     hero.rherob-=2;
                     hero.rheroe-=2;
                 }
-                if(move=='g'&& hero.rheroe>100 ){
+                if(move=='g'&& hero.rheroe<98 ){
                 
                     hero.rherob+=2;
                     hero.rheroe+=2;
