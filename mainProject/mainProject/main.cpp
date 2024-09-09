@@ -4926,7 +4926,15 @@ void moveHero(wchar_t x[][1190], Hero& hero, char  move, int f, Elevator& elevat
                         }
                         
                         else{
-                            if(move=='n' &&   hero.flagInElevator==1){
+                            if(move=='n')
+                                if(hero.cherob>=735 && hero.cherob<=770 && hero.rherob>=elevator.rb && hero.rherob<=elevator.rb+22&& hero.flagInElevator==0){
+                                    hero.cherob=elevator.cb+5;
+                                    hero.cheroe=elevator.cb+5+16;
+                                    hero.rherob=elevator.rb+2;
+                                    hero.rheroe=elevator.rb+2+15;
+                                    hero.flagInElevator=1;
+                                }
+                            if(hero.flagInElevator==1 && hero.rherob<130 && hero.rherob>100){
                                 
                                 hero.cherob=elevator.cb-33;
                                 hero.cheroe=elevator.cb-33+16;
@@ -5607,7 +5615,8 @@ int main() {
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
             drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy);
-            printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);            usleep(100);
+            printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);
+            usleep(100);
             
             
             
@@ -5662,7 +5671,7 @@ int main() {
                 hero.cheroe=120+35*3+16;
             }
             else{
-                if(move=='t' &&hero2.r>=startoOfScreen2+20 ){
+                if(move=='t' &&hero2.r>=startoOfScreen2+10 ){
                 
                     hero2.r-=2;
                 }
