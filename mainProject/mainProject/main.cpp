@@ -78,6 +78,15 @@ struct Enemy{
     
 };
 
+struct Snail{
+    int rb;
+    int cb;
+    int cEndOfMove;
+    int frames;
+    int health;
+    
+};
+
 bool kbhit() {
     struct timeval tv;
     fd_set fds;
@@ -1322,11 +1331,33 @@ void moveEnemy(wchar_t x[][1190], Enemy & enemy){
 }
 
 
+void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfScreen2, Snail &snail){
+    int i,j;
+    
+    if(snail.health!=0){
+        int r=snail.rb-5;
+        int c=snail.cb-10;
+        for(j=0;j<snail.health;j++){
+            x[r+0][c+1]='^';
+             for(i=0;i<2;i++){
+               x[r+0][c+2+i]='.';
+              }
+            x[r+0][c+4]='^';
+            x[r+1][c+1]=92;
+            x[r+1][c+4]='/';
+            x[r+2][c+2]=92;
+            x[r+2][c+3]='/';
+            
+            c+=10;
+        }
+    }
+
+}
 
 void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfScreen2, Bat& bat, Enemy &enemy, Enemy &enemy2){
     int i,j;
     for(i=startOfScreen2;i<startOfScreen2+10;i++){
-        for(j=startOfScreen;j<startOfScreen+238;j++){
+        for(j=startOfScreen;j<startOfScreen+150;j++){
             x[i][j]=' ';
         }
     }
@@ -1437,7 +1468,7 @@ void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfSc
      c=startOfScreen+50;
     
  
-    for(j=0;j<hero.health;j++){
+    for(j=0;j<hero.health && j<5;j++){
         x[r+0][c+1]='^';
          for(i=0;i<2;i++){
            x[r+0][c+2+i]='.';
@@ -1502,8 +1533,195 @@ void drawHealthBar(wchar_t x[][1190], Hero&hero, int startOfScreen,int startOfSc
             c+=10;
         }
     }
+    
+    }
 
-}
+
+
+void drawBulletBar(wchar_t x[][1190], int startOfScreen,int startOfScreen2,int ctBullets, int ctBulletFrames, int & ctLoad){
+    int i,j;
+    int ct = 4-ctBullets;
+    for(i=startOfScreen2;i<startOfScreen2+10;i++){
+        for(j=startOfScreen+150;j<startOfScreen+238;j++){
+            x[i][j]=' ';
+        }
+    }
+    i=0;
+    int r=startOfScreen2+1;
+    int c=startOfScreen+238-47-2-40;
+    
+    for(i=0;i<4;i++){
+      x[r+0][c+1+i]='_';
+     }
+   x[r+0][c+7]='_';
+   x[r+0][c+11]='_';
+   x[r+0][c+13]='_';
+   x[r+0][c+19]='_';
+    for(i=0;i<5;i++){
+      x[r+0][c+25+i]='_';
+     }
+    for(i=0;i<5;i++){
+      x[r+0][c+31+i]='_';
+     }
+    for(i=0;i<4;i++){
+      x[r+0][c+37+i]='_';
+     }
+   x[r+1][c+0]='|';
+    for(i=0;i<2;i++){
+      x[r+1][c+2+i]='_';
+     }
+   x[r+1][c+5]=')';
+   x[r+1][c+6]='|';
+   x[r+1][c+8]='|';
+   x[r+1][c+10]='|';
+   x[r+1][c+12]='|';
+   x[r+1][c+14]='|';
+   x[r+1][c+18]='|';
+   x[r+1][c+20]='|';
+   x[r+1][c+24]='|';
+    for(i=0;i<4;i++){
+      x[r+1][c+26+i]='_';
+     }
+   x[r+1][c+30]='|';
+   x[r+1][c+31]='_';
+   x[r+1][c+35]='_';
+   x[r+1][c+36]='/';
+    for(i=0;i<3;i++){
+      x[r+1][c+38+i]='_';
+     }
+   x[r+1][c+41]='|';
+   x[r+1][c+42]='_';
+   x[r+2][c+0]='|';
+   x[r+2][c+3]='_';
+   x[r+2][c+5]=92;
+   x[r+2][c+6]='|';
+   x[r+2][c+8]='|';
+   x[r+2][c+10]='|';
+   x[r+2][c+12]='|';
+   x[r+2][c+14]='|';
+   x[r+2][c+18]='|';
+   x[r+2][c+20]='|';
+   x[r+2][c+24]='|';
+   x[r+2][c+27]='_';
+   x[r+2][c+28]='|';
+   x[r+2][c+32]='|';
+   x[r+2][c+34]='|';
+   x[r+2][c+36]=92;
+    for(i=0;i<3;i++){
+      x[r+2][c+37+i]='_';
+     }
+   x[r+2][c+41]='(';
+   x[r+2][c+42]='_';
+   x[r+2][c+43]=')';
+   x[r+3][c+0]='|';
+   x[r+3][c+2]='|';
+   x[r+3][c+3]='_';
+   x[r+3][c+4]=')';
+   x[r+3][c+6]='|';
+   x[r+3][c+8]='|';
+   x[r+3][c+9]='_';
+   x[r+3][c+10]='|';
+   x[r+3][c+12]='|';
+   x[r+3][c+14]='|';
+    for(i=0;i<3;i++){
+      x[r+3][c+15+i]='_';
+     }
+   x[r+3][c+18]='|';
+   x[r+3][c+20]='|';
+    for(i=0;i<3;i++){
+      x[r+3][c+21+i]='_';
+     }
+   x[r+3][c+24]='|';
+   x[r+3][c+26]='|';
+    for(i=0;i<3;i++){
+      x[r+3][c+27+i]='_';
+     }
+   x[r+3][c+32]='|';
+   x[r+3][c+34]='|';
+    for(i=0;i<3;i++){
+      x[r+3][c+37+i]='_';
+     }
+   x[r+3][c+40]=')';
+   x[r+3][c+42]='|';
+   x[r+4][c+0]='|';
+    for(i=0;i<4;i++){
+      x[r+4][c+1+i]='_';
+     }
+   x[r+4][c+5]='/';
+   x[r+4][c+7]=92;
+    for(i=0;i<3;i++){
+      x[r+4][c+8+i]='_';
+     }
+   x[r+4][c+11]='/';
+   x[r+4][c+12]='|';
+    for(i=0;i<5;i++){
+      x[r+4][c+13+i]='_';
+     }
+   x[r+4][c+18]='|';
+    for(i=0;i<5;i++){
+      x[r+4][c+19+i]='_';
+     }
+   x[r+4][c+24]='|';
+    for(i=0;i<5;i++){
+      x[r+4][c+25+i]='_';
+     }
+   x[r+4][c+30]='|';
+   x[r+4][c+32]='|';
+   x[r+4][c+33]='_';
+   x[r+4][c+34]='|';
+   x[r+4][c+36]='|';
+    for(i=0;i<4;i++){
+      x[r+4][c+37+i]='_';
+     }
+   x[r+4][c+41]='(';
+   x[r+4][c+42]='_';
+   x[r+4][c+43]=')';
+    
+    c+=47;
+    r+=1;
+    
+    
+    if(ctBulletFrames<4 || ctBulletFrames>450){
+        for(j=0;j<ct;j++){
+            for(i=0;i<2;i++){
+                x[r+0][c+2+i]='/';
+            }
+            x[r+0][c+4]=92;
+            x[r+1][c+1]='|';
+            x[r+1][c+2]='/';
+            x[r+1][c+3]='_';
+            x[r+1][c+4]=92;
+            x[r+1][c+5]='|';
+            x[r+2][c+1]='/';
+            x[r+2][c+3]='_';
+            x[r+2][c+5]=92;
+            
+            c+=10;
+        }
+    }
+    else{
+        if(ctBulletFrames>=4 && ctBulletFrames<450){
+            for(j=0;j<ctLoad;j++){
+                x[r+0][c+1]='_';
+                x[r+1][c+0]='(';
+                x[r+1][c+1]='_';
+                x[r+1][c+2]=')';
+                c+=5;
+            }
+            if(ctBulletFrames%55==0){
+                ctLoad++;
+            }
+        }
+        if (ctBulletFrames>=450){
+            ctLoad=0;
+        }
+        }
+
+
+    }
+        
+    
+
 
 void drawMastabaWithLadder(wchar_t x[][1190]){
     int r=100;
@@ -2923,7 +3141,7 @@ void initializechar(wchar_t x[][1190]) {
 
 
 void GameOVer(wchar_t x[][1190]){
-    int r=20,c=80,i;
+    int r=7,c=85,i;
     x[r+0][c+28]=40;
     x[r+1][c+16]=46;
     x[r+1][c+29]=41;
@@ -3481,6 +3699,197 @@ void GameOVer(wchar_t x[][1190]){
     x[r+32][c+48]=47;
     x[r+32][c+49]=94;
     x[r+32][c+55]=94;
+    
+    
+    //    WANT TO PLAY AGAIN?
+        
+        
+        
+        r +=40;
+        c-=21;
+        
+        
+       
+    x[r+0][c+0]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+3+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+5+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+7+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+11+i]='.';
+      }
+     for(i=0;i<3;i++){
+       x[r+0][c+13+i]='_';
+      }
+    x[r+0][c+16]='.';
+    x[r+0][c+21]='.';
+     for(i=0;i<3;i++){
+       x[r+0][c+22+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+25+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+27+i]='_';
+      }
+    x[r+0][c+29]='.';
+    x[r+0][c+34]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+35+i]='_';
+      }
+    x[r+0][c+38]='.';
+    x[r+0][c+42]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+43+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+45+i]='.';
+      }
+    x[r+0][c+50]=',';
+    x[r+0][c+55]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+56+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+58+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+60+i]='_';
+      }
+    x[r+0][c+63]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+64+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+66+i]='.';
+      }
+    x[r+0][c+68]='_';
+     for(i=0;i<2;i++){
+       x[r+0][c+69+i]='.';
+      }
+    x[r+0][c+73]='.';
+    x[r+0][c+75]='_';
+    x[r+0][c+81]='[';
+    x[r+0][c+82]='~';
+    x[r+0][c+86]='.';
+    x[r+0][c+90]=',';
+    x[r+0][c+95]='/';
+    x[r+0][c+99]='.';
+    x[r+0][c+102]='.';
+    x[r+0][c+106]='~';
+    x[r+0][c+107]=']';
+    x[r+1][c+0]='|';
+    x[r+1][c+3]='|';
+    x[r+1][c+4]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+5+i]='_';
+      }
+    x[r+1][c+7]=']';
+    x[r+1][c+8]='|';
+    x[r+1][c+9]=92;
+    x[r+1][c+11]='|';
+    x[r+1][c+14]='|';
+    x[r+1][c+23]='|';
+    x[r+1][c+26]='|';
+    x[r+1][c+29]='|';
+    x[r+1][c+34]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+35+i]='_';
+      }
+    x[r+1][c+37]=')';
+    x[r+1][c+38]='|';
+    x[r+1][c+42]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+43+i]='_';
+      }
+    x[r+1][c+45]=']';
+    x[r+1][c+47]=92;
+    x[r+1][c+48]='.';
+    x[r+1][c+49]='/';
+    x[r+1][c+55]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+56+i]='_';
+      }
+    x[r+1][c+58]=']';
+    x[r+1][c+59]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+61+i]='_';
+      }
+    x[r+1][c+63]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+64+i]='_';
+      }
+    x[r+1][c+66]=']';
+    x[r+1][c+68]='|';
+    x[r+1][c+70]='|';
+    x[r+1][c+71]=92;
+    x[r+1][c+73]='|';
+    x[r+1][c+74]=39;
+    x[r+1][c+76]=')';
+    x[r+1][c+81]='[';
+    x[r+1][c+87]=92;
+    x[r+1][c+88]='.';
+    x[r+1][c+89]='/';
+    x[r+1][c+94]='/';
+    x[r+1][c+99]='|';
+    x[r+1][c+100]=92;
+    x[r+1][c+102]='|';
+    x[r+1][c+107]=']';
+    x[r+2][c+0]='|';
+    x[r+2][c+1]='/';
+    x[r+2][c+2]=92;
+     for(i=0;i<2;i++){
+       x[r+2][c+3+i]='|';
+      }
+     for(i=0;i<2;i++){
+       x[r+2][c+7+i]='|';
+      }
+    x[r+2][c+10]=92;
+    x[r+2][c+11]='|';
+    x[r+2][c+14]='|';
+    x[r+2][c+23]='|';
+    x[r+2][c+26]='|';
+     for(i=0;i<2;i++){
+       x[r+2][c+27+i]='_';
+      }
+    x[r+2][c+29]='|';
+    x[r+2][c+34]='|';
+    x[r+2][c+38]='|';
+     for(i=0;i<3;i++){
+       x[r+2][c+39+i]='_';
+      }
+    x[r+2][c+42]='|';
+    x[r+2][c+45]='|';
+    x[r+2][c+48]='|';
+    x[r+2][c+55]='|';
+    x[r+2][c+58]='|';
+    x[r+2][c+59]='[';
+    x[r+2][c+60]='_';
+    x[r+2][c+61]='.';
+    x[r+2][c+62]='/';
+    x[r+2][c+63]='|';
+    x[r+2][c+66]='|';
+    x[r+2][c+67]='_';
+    x[r+2][c+68]='|';
+    x[r+2][c+69]='_';
+    x[r+2][c+70]='|';
+    x[r+2][c+72]=92;
+    x[r+2][c+73]='|';
+    x[r+2][c+75]=';';
+    x[r+2][c+81]='[';
+    x[r+2][c+82]='_';
+    x[r+2][c+88]='|';
+    x[r+2][c+93]='/';
+    x[r+2][c+99]='|';
+    x[r+2][c+101]=92;
+    x[r+2][c+102]='|';
+    x[r+2][c+106]='_';
+    x[r+2][c+107]=']';
 }
 void HomeScreen(wchar_t x[][1190]){
     
@@ -4392,7 +4801,7 @@ void HomeScreen(wchar_t x[][1190]){
     
     
     r +=20;
-    c-=20;
+    c-=25;
     
     
     x[r+0][c+0]='.';
@@ -4702,6 +5111,162 @@ void drawBat(wchar_t x[][1190], Bat& bat){
         x[r+3][c+6]='`';
         x[r+3][c+7]='-';
         x[r+3][c+8]=39;
+    }
+}
+void drawSnail(wchar_t x[][1190], Snail& snail){
+    int r=snail.rb;
+    int c=snail.cb;
+    int i;
+
+
+    if( snail.health!=0 ){
+        x[r+0][c+3]='/';
+        x[r+0][c+4]='^';
+        x[r+0][c+5]=92;
+        x[r+0][c+10]='/';
+        x[r+0][c+11]='^';
+        x[r+0][c+12]=92;
+        x[r+1][c+2]='{';
+        x[r+1][c+3]='O';
+        x[r+1][c+6]='}';
+        x[r+1][c+9]='{';
+        x[r+1][c+10]='O';
+        x[r+1][c+13]='}';
+        x[r+2][c+3]=92;
+        x[r+2][c+5]='/';
+        x[r+2][c+10]=92;
+        x[r+2][c+12]='/';
+         for(i=0;i<2;i++){
+           x[r+3][c+4+i]='|';
+          }
+         for(i=0;i<2;i++){
+           x[r+3][c+10+i]='|';
+          }
+        x[r+3][c+20]='_';
+         for(i=0;i<6;i++){
+           x[r+3][c+21+i]='-';
+          }
+        x[r+3][c+27]='_';
+         for(i=0;i<2;i++){
+           x[r+4][c+4+i]='|';
+          }
+         for(i=0;i<2;i++){
+           x[r+4][c+10+i]='|';
+          }
+        x[r+4][c+17]='.';
+        x[r+4][c+18]='/';
+        x[r+4][c+19]='~';
+        x[r+4][c+28]='~';
+        x[r+4][c+29]='-';
+        x[r+4][c+30]='_';
+        x[r+5][c+3]='/';
+        x[r+5][c+5]='~';
+         for(i=0;i<4;i++){
+           x[r+5][c+6+i]='-';
+          }
+        x[r+5][c+10]='~';
+        x[r+5][c+11]='/';
+        x[r+5][c+17]='/';
+        x[r+5][c+32]=92;
+        x[r+6][c+1]='/';
+        x[r+6][c+11]=':';
+        x[r+6][c+15]='.';
+        x[r+6][c+16]='/';
+        x[r+6][c+24]='_';
+         for(i=0;i<3;i++){
+           x[r+6][c+25+i]='-';
+          }
+        x[r+6][c+28]='_';
+        x[r+6][c+33]='~';
+        x[r+6][c+34]='-';
+        x[r+7][c+0]='(';
+         for(i=0;i<8;i++){
+           x[r+7][c+1+i]='_';
+          }
+        x[r+7][c+9]='/';
+        x[r+7][c+11]='|';
+        x[r+7][c+15]=':';
+        x[r+7][c+23]='/';
+        x[r+7][c+24]='~';
+        x[r+7][c+30]='~';
+        x[r+7][c+31]=92;
+        x[r+7][c+35]='|';
+        x[r+8][c+0]='|';
+        x[r+8][c+9]='/';
+        x[r+8][c+14]='|';
+        x[r+8][c+21]='|';
+        x[r+8][c+24]=':';
+         for(i=0;i<2;i++){
+           x[r+8][c+25+i]='~';
+          }
+        x[r+8][c+27]=92;
+        x[r+8][c+30]='|';
+        x[r+8][c+34]='|';
+        x[r+9][c+0]='|';
+        x[r+9][c+8]='|';
+        x[r+9][c+14]='|';
+        x[r+9][c+21]='|';
+        x[r+9][c+24]=92;
+         for(i=0;i<3;i++){
+           x[r+9][c+25+i]='_';
+          }
+        x[r+9][c+28]='-';
+        x[r+9][c+29]='~';
+        x[r+9][c+34]='|';
+        x[r+10][c+0]='|';
+        x[r+10][c+9]=92;
+         for(i=0;i<2;i++){
+           x[r+10][c+11+i]='_';
+          }
+        x[r+10][c+13]='/';
+        x[r+10][c+14]='`';
+        x[r+10][c+15]='^';
+        x[r+10][c+16]=92;
+         for(i=0;i<6;i++){
+           x[r+10][c+17+i]='_';
+          }
+        x[r+10][c+23]=92;
+        x[r+10][c+24]='.';
+        x[r+10][c+33]='.';
+        x[r+10][c+34]='/';
+        x[r+11][c+1]=92;
+        x[r+11][c+23]='~';
+        x[r+11][c+24]='-';
+         for(i=0;i<6;i++){
+           x[r+11][c+25+i]='_';
+          }
+        x[r+11][c+31]='-';
+        x[r+11][c+32]='~';
+        x[r+11][c+33]=92;
+        x[r+11][c+34]='.';
+        x[r+12][c+1]='.';
+        x[r+12][c+2]='|';
+        x[r+12][c+35]='~';
+        x[r+12][c+36]='-';
+        x[r+12][c+37]='_';
+        x[r+13][c+0]='/';
+         for(i=0;i<37;i++){
+           x[r+13][c+1+i]='_';
+          }
+         for(i=0;i<2;i++){
+           x[r+13][c+38+i]='~';
+          }
+         for(i=0;i<4;i++){
+           x[r+13][c+40+i]='_';
+          }
+    }
+}
+
+void moveSnail(wchar_t x[][1190], Snail& snail){
+    if(snail.frames%30==0){
+        if(snail.cb>=snail.cEndOfMove){
+            snail.cb-=3;
+        }
+    }
+
+    snail.frames++;
+    if(snail.frames> 30 *100000){
+        snail.frames=0;
     }
 }
 
@@ -5144,6 +5709,26 @@ int checkNoObstacle(wchar_t  x[] [1190],Hero & hero, int heroDiriction){
     }
     
     hero.inLadder=0;
+    return 0;
+}
+int checkNoObstacleForSnale(wchar_t  x[] [1190],Snail & snail){
+
+    //CHECK NO OBSTACLE, RIGHT SIDE.
+    int r= snail.rb;
+   int c= snail.cb;
+    
+    
+    
+        
+
+    //CHECK NO OBSTACLE, LEFT SIDE.
+
+        
+        if(x[r+0][c+3-2]==' ' && x[r+1][c+2-2]==' ' && x[r+2][c+3-2]==' ' && x[r+3][c+4-2]==' ' && x[r+4][c+4-2]==' ' && x[r+5][c+3-2]==' ' && x[r+6][c+1-2]==' ' && x[r+7][c+0-2]==' ' && x[r+8][c+0-2]==' ' && x[r+9][c+0-2]==' ' && x[r+10][c+0-2]==' ' && x[r+11][c+1-2]==' ' && x[r+12][c+1-2]==' ' && x[r+13][c+0-2]==' ' ){
+            return 1;
+        }
+    
+
     return 0;
 }
 
@@ -5747,13 +6332,28 @@ void moveBullet(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, i
         
     }
 }
-void checkBatDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, int endOfScreen,Bat &bat){
+
+void checkSnail(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, Snail& snail){
+    
     for(int i=0; i<ctBullets;i++){
         
-       
+        if(bullet[i].cBullet+5>=snail.cb &&bullet[i].cBullet<=snail.cb+15 && bullet[i].rBullet >=snail.rb){
+            snail.health--;
+            if(snail.health==0 &&hero.health<=5){
+                hero.health++;
+            }
+            
+            
+            
+            
+        }
+    }
+}
+void checkBatDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets, int endOfScreen,Bat &bat){
+    for(int i=0; i<ctBullets;i++){
         if(bullet[i].rBullet>=bat.r &&bullet[i].rBullet<=bat.r+6 && bullet[i].cBullet-5>=bat.c &&bullet[i].cBullet<=bat.c+5){
             bat.health--;
-            if(bat.health==0){
+            if(bat.health==0 &&hero.health<=5){
                 hero.health++;
             }
             bat.frames=690000+150;
@@ -5772,7 +6372,7 @@ void checkEnemyDie(wchar_t x[][1190], Hero & hero,Bullet * bullet, int ctBullets
         if(bullet[i].rBullet>=enemy.rb-2 &&bullet[i].rBullet<=enemy.rb+6 && bullet[i].cBullet>=enemy.cb-10 &&bullet[i].cBullet<=enemy.cb+15){
             enemy.health--;
             enemy.cb+=enemy.dir*2;
-            if(enemy.health==0){
+            if(enemy.health==0 &&hero.health<=5){
                 hero.health++;
                 
             }
@@ -6949,53 +7549,67 @@ void drawHero2(wchar_t x[][1190], Hero2 & hero2){
     
 }
 int main() {
+    
     setNonCanonicalMode();
-    int i;
-    int isFalling=0;
-    int startoOfScreen=0;
-    int endOfScreen=238;
-    int startoOfScreen2 = 74;
-    int endOfScreen2    = 148;
-    int ctBullets=0;
-    Bullet * bullet = NULL;
-    int flagDraw=0;
-    wchar_t x[222][1190];
-    i=0;
-    Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0,0};
-    Elevator elevator ={120,112,718,718,0, -1};
-    Laser laser ={0,-1,105,143};
-    Hero2 hero2={98,118+35*5};
-    Bat bat;
-    bat.frames=0;
-    bat.health=3;
-    bat.r=148-60;
-    bat.c=120+35*3+160;
 
 
-    
-    bat.rBullet=bat.r+2;
-    bat.cBullet=bat.c-3;
-    bat.dir=-1;
-   
-    hero.jumpFrames=0;
-    Enemy enemy;
-    enemy.rb=90;
-    enemy.cb=640;
-    enemy.dir=1;
-    enemy.frames=0;
-    enemy.health=10;
-    
-    Enemy enemy2;
-    enemy2.rb=66;
-    enemy2.cb=640;
-    enemy2.dir=1;
-    enemy2.frames=0;
-    enemy2.health=5;
-    int ctFrames =0;
+    char move2 = 'y';
+    while(move2=='y'){
+        
+        int i;
+        wchar_t x[222][1190];
+        int isFalling=0;
+        int startoOfScreen=0;
+        int endOfScreen=238;
+        int startoOfScreen2 = 74;
+        int endOfScreen2    = 148;
+        int ctBullets=0;
+        Bullet * bullet = NULL;
+        int flagDraw=0;
+
+        i=0;
+        Hero hero = {128 , 143, 20, 41 , 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,3,0 ,0,0};
+        Elevator elevator ={120,112,718,718,0, -1};
+        Laser laser ={0,-1,105,143};
+        Hero2 hero2={98,118+35*5};
+        Bat bat;
+        bat.frames=0;
+        bat.health=3;
+        bat.r=148-60;
+        bat.c=120+35*3+160;
+        Snail snail[4]={ {204,1000,760,0,5}, {204,1050,770,0,5},{204,1120,780,0,5},{204,1150,790,0,5}};
+
+        bat.frames=0;
+        bat.health=3;
+        bat.r=148-60;
+        bat.c=120+35*3+160;
+        bat.rBullet=bat.r+2;
+        bat.cBullet=bat.c-3;
+        bat.dir=-1;
+        hero.jumpFrames=0;
+        Enemy enemy;
+        enemy.rb=90;
+        enemy.cb=640;
+        enemy.dir=1;
+        enemy.frames=0;
+        enemy.health=10;
+        
+        Enemy enemy2;
+        enemy2.rb=66;
+        enemy2.cb=640;
+        enemy2.dir=1;
+        enemy2.frames=0;
+        enemy2.health=5;
+        int ctFrames =0;
+        int ctLoad =0 ;
+        int ctBulletFrames=0;
+        initializechar(x);
     while(!kbhit()){
         initializechar(x);
         if(ctFrames<300){
             HomeScreen(x);
+   
+
 
         }
         else if (ctFrames==370){
@@ -7004,9 +7618,11 @@ int main() {
         printMapToScreen(x,0, 238, 0, 74);
         ctFrames++;
     }
-
     for (;;) {
-     
+
+        move2='a';
+
+
         while (!kbhit()) {
             
             initializechar(x);
@@ -7014,6 +7630,27 @@ int main() {
             drawDoor(x);
             drawPortal(x, hero);
             drawMastabaWithLaser(x);
+            for(int j=0; j<4; j++){
+                if(snail[j].health!=0){
+                    drawSnail(x, snail[j]);
+                    if(hero.rherob<222 && hero.rherob>130 && checkNoObstacleForSnale(x, snail[j])){
+          
+                        moveSnail(x, snail[j]);
+                        checkSnail(x, hero, bullet, ctBullets, snail[j]);
+                        if(hero.cheroe+2==snail[j].cb-2){
+                            hero.health--;
+                            hero.cherob-=10;
+                            hero.cheroe-=10;
+                           
+                        }
+                    }
+                   
+                   
+                }
+            }
+
+            
+            
             if(enemy.health!=0){
                 
                 if(enemy.dir==-1){
@@ -7060,6 +7697,8 @@ int main() {
              
                     
                         checkEnemyDie(x, hero, bullet, ctBullets,  endOfScreen, enemy2);
+
+
                         
                         moveEnemy(x, enemy2);
                         enemy2.frames++;
@@ -7201,6 +7840,10 @@ int main() {
                 }
             }
             
+            if(ctBulletFrames>0){
+                ctBulletFrames++;
+            }
+            
         
             
             jumpHero(x, hero, isFalling);
@@ -7214,6 +7857,16 @@ int main() {
             isScrollingLftToRight(x, startoOfScreen, hero.cherob, endOfScreen);
             isScrollingBtmTop(x, startoOfScreen2, hero.rherob, endOfScreen2);
             drawHealthBar(x, hero,startoOfScreen, startoOfScreen2, bat, enemy,enemy2);
+  
+            drawBulletBar(x, startoOfScreen, startoOfScreen2, ctBullets, ctBulletFrames, ctLoad);
+
+            for(int j=0; j<4;j++){
+                drawHealthBar(x, hero,startoOfScreen, startoOfScreen2,snail[j]);
+            }
+
+
+
+
             printMapToScreen(x,startoOfScreen,endOfScreen,startoOfScreen2,endOfScreen2);
             usleep(100);
             
@@ -7227,7 +7880,14 @@ int main() {
             break;
         }
         char move = getchar ();
-        if(move=='z'){
+        
+        if(move=='z' && ctBulletFrames<4){
+            if(ctBullets>3){
+                ctBulletFrames++;
+                ctBullets=3;
+            }
+            
+            
             
             Bullet *newBullet = new Bullet[ctBullets+1];
             for (int i = 0; i < ctBullets; i++) {
@@ -7252,10 +7912,16 @@ int main() {
                 ctBullets++;
         
         }
-        else{
-            hero.flagShooting=0;
+        
+        else if (ctBulletFrames>450){
+            ctBulletFrames=0;
             
         }
+        else{
+            hero.flagShooting=0;
+
+        }
+        
         
         
         if(hero.inAirplane==0){
@@ -7302,11 +7968,23 @@ int main() {
        
        
     }
-    
-    initializechar(x);
-    GameOVer(x);
-    COUT(x);
-    
+    while(move2 != 'y' && move2 != 'N'){
+        while (!kbhit()){
+            initializechar(x);
+            if(ctFrames<300){
+                GameOVer(x);
+                
+            }
+            else if (ctFrames==370){
+                ctFrames=0;
+            }
+            printMapToScreen(x,0, 238, 0, 74);
+            ctFrames++;
+        }
+        move2 = getchar();
+    }
+        
+    }
 restoreTerminalSettings();
 
     return 0;
