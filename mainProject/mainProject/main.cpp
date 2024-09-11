@@ -957,6 +957,23 @@ void drawFixedGround(wchar_t x[][1190])
     
   }
 
+bool checkAllMobsDead(Hero&hero, Bat & bat, Enemy &enemy1,Enemy &enemy2, Snail snail[], int NSnails){
+    if(hero.health!=5 || bat.health!=0  || enemy1.health!=0  || enemy2.health!=0){
+        for(int i=0; i<NSnails;i++){
+            if(snail[i].health==0){
+                return true;
+            }
+            
+        }
+    }
+    return false;
+}
+bool playerArrived(Hero &hero){
+    if(hero.cherob>1100){
+        return true;
+    }
+    return false;
+}
 void drawDoor(wchar_t x[][1190]){
     int r=148-4-11;
     int c=0;
@@ -1681,7 +1698,7 @@ void drawBulletBar(wchar_t x[][1190], int startOfScreen,int startOfScreen2,int c
     r+=1;
     
     
-    if(ctBulletFrames<4 || ctBulletFrames>450){
+    if(ctBulletFrames<5 || ctBulletFrames>450){
         for(j=0;j<ct;j++){
             for(i=0;i<2;i++){
                 x[r+0][c+2+i]='/';
@@ -1700,7 +1717,7 @@ void drawBulletBar(wchar_t x[][1190], int startOfScreen,int startOfScreen2,int c
         }
     }
     else{
-        if(ctBulletFrames>=4 && ctBulletFrames<450){
+        if(ctBulletFrames>=3 && ctBulletFrames<450){
             for(j=0;j<ctLoad;j++){
                 x[r+0][c+1]='_';
                 x[r+1][c+0]='(';
@@ -3706,6 +3723,298 @@ void GameOVer(wchar_t x[][1190]){
         
         
         r +=40;
+        c-=21;
+        
+        
+       
+    x[r+0][c+0]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+3+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+5+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+7+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+11+i]='.';
+      }
+     for(i=0;i<3;i++){
+       x[r+0][c+13+i]='_';
+      }
+    x[r+0][c+16]='.';
+    x[r+0][c+21]='.';
+     for(i=0;i<3;i++){
+       x[r+0][c+22+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+25+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+27+i]='_';
+      }
+    x[r+0][c+29]='.';
+    x[r+0][c+34]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+35+i]='_';
+      }
+    x[r+0][c+38]='.';
+    x[r+0][c+42]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+43+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+45+i]='.';
+      }
+    x[r+0][c+50]=',';
+    x[r+0][c+55]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+56+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+58+i]='.';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+60+i]='_';
+      }
+    x[r+0][c+63]='.';
+     for(i=0;i<2;i++){
+       x[r+0][c+64+i]='_';
+      }
+     for(i=0;i<2;i++){
+       x[r+0][c+66+i]='.';
+      }
+    x[r+0][c+68]='_';
+     for(i=0;i<2;i++){
+       x[r+0][c+69+i]='.';
+      }
+    x[r+0][c+73]='.';
+    x[r+0][c+75]='_';
+    x[r+0][c+81]='[';
+    x[r+0][c+82]='~';
+    x[r+0][c+86]='.';
+    x[r+0][c+90]=',';
+    x[r+0][c+95]='/';
+    x[r+0][c+99]='.';
+    x[r+0][c+102]='.';
+    x[r+0][c+106]='~';
+    x[r+0][c+107]=']';
+    x[r+1][c+0]='|';
+    x[r+1][c+3]='|';
+    x[r+1][c+4]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+5+i]='_';
+      }
+    x[r+1][c+7]=']';
+    x[r+1][c+8]='|';
+    x[r+1][c+9]=92;
+    x[r+1][c+11]='|';
+    x[r+1][c+14]='|';
+    x[r+1][c+23]='|';
+    x[r+1][c+26]='|';
+    x[r+1][c+29]='|';
+    x[r+1][c+34]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+35+i]='_';
+      }
+    x[r+1][c+37]=')';
+    x[r+1][c+38]='|';
+    x[r+1][c+42]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+43+i]='_';
+      }
+    x[r+1][c+45]=']';
+    x[r+1][c+47]=92;
+    x[r+1][c+48]='.';
+    x[r+1][c+49]='/';
+    x[r+1][c+55]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+56+i]='_';
+      }
+    x[r+1][c+58]=']';
+    x[r+1][c+59]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+61+i]='_';
+      }
+    x[r+1][c+63]='[';
+     for(i=0;i<2;i++){
+       x[r+1][c+64+i]='_';
+      }
+    x[r+1][c+66]=']';
+    x[r+1][c+68]='|';
+    x[r+1][c+70]='|';
+    x[r+1][c+71]=92;
+    x[r+1][c+73]='|';
+    x[r+1][c+74]=39;
+    x[r+1][c+76]=')';
+    x[r+1][c+81]='[';
+    x[r+1][c+87]=92;
+    x[r+1][c+88]='.';
+    x[r+1][c+89]='/';
+    x[r+1][c+94]='/';
+    x[r+1][c+99]='|';
+    x[r+1][c+100]=92;
+    x[r+1][c+102]='|';
+    x[r+1][c+107]=']';
+    x[r+2][c+0]='|';
+    x[r+2][c+1]='/';
+    x[r+2][c+2]=92;
+     for(i=0;i<2;i++){
+       x[r+2][c+3+i]='|';
+      }
+     for(i=0;i<2;i++){
+       x[r+2][c+7+i]='|';
+      }
+    x[r+2][c+10]=92;
+    x[r+2][c+11]='|';
+    x[r+2][c+14]='|';
+    x[r+2][c+23]='|';
+    x[r+2][c+26]='|';
+     for(i=0;i<2;i++){
+       x[r+2][c+27+i]='_';
+      }
+    x[r+2][c+29]='|';
+    x[r+2][c+34]='|';
+    x[r+2][c+38]='|';
+     for(i=0;i<3;i++){
+       x[r+2][c+39+i]='_';
+      }
+    x[r+2][c+42]='|';
+    x[r+2][c+45]='|';
+    x[r+2][c+48]='|';
+    x[r+2][c+55]='|';
+    x[r+2][c+58]='|';
+    x[r+2][c+59]='[';
+    x[r+2][c+60]='_';
+    x[r+2][c+61]='.';
+    x[r+2][c+62]='/';
+    x[r+2][c+63]='|';
+    x[r+2][c+66]='|';
+    x[r+2][c+67]='_';
+    x[r+2][c+68]='|';
+    x[r+2][c+69]='_';
+    x[r+2][c+70]='|';
+    x[r+2][c+72]=92;
+    x[r+2][c+73]='|';
+    x[r+2][c+75]=';';
+    x[r+2][c+81]='[';
+    x[r+2][c+82]='_';
+    x[r+2][c+88]='|';
+    x[r+2][c+93]='/';
+    x[r+2][c+99]='|';
+    x[r+2][c+101]=92;
+    x[r+2][c+102]='|';
+    x[r+2][c+106]='_';
+    x[r+2][c+107]=']';
+}
+void congrats(wchar_t x[][1190]){
+    int r=20,c=85,i;
+   
+    
+    x[r+0][c+0]='.';
+    x[r+1][c+18]='.';
+    x[r+1][c+26]='|';
+    x[r+1][c+36]='.';
+    x[r+1][c+41]='.';
+    x[r+2][c+12]='.';
+    x[r+2][c+15]='*';
+    x[r+2][c+25]='-';
+    x[r+2][c+26]='*';
+    x[r+2][c+27]='-';
+    x[r+2][c+38]='*';
+    x[r+3][c+17]=92;
+    x[r+3][c+26]='|';
+    x[r+3][c+36]='/';
+    x[r+3][c+40]='.';
+    x[r+4][c+0]='.';
+    x[r+4][c+5]='.';
+    x[r+4][c+18]='.';
+    x[r+4][c+25]='/';
+    x[r+4][c+26]='^';
+    x[r+4][c+27]=92;
+    x[r+4][c+33]='.';
+    x[r+4][c+48]='.';
+    x[r+4][c+53]='.';
+    x[r+5][c+3]='*';
+    x[r+5][c+8]='|';
+    x[r+5][c+9]=92;
+    x[r+5][c+13]='/';
+    x[r+5][c+14]=92;
+    x[r+5][c+19]='/';
+    x[r+5][c+20]=92;
+    x[r+5][c+23]='/';
+    x[r+5][c+25]='/';
+    x[r+5][c+27]=92;
+    x[r+5][c+29]=92;
+    x[r+5][c+32]='/';
+    x[r+5][c+33]=92;
+    x[r+5][c+38]='/';
+    x[r+5][c+39]=92;
+    x[r+5][c+43]='/';
+    x[r+5][c+44]='|';
+    x[r+5][c+49]='*';
+    x[r+6][c+1]='.';
+    x[r+6][c+5]='.';
+    x[r+6][c+8]='|';
+    x[r+6][c+11]=92;
+    x[r+6][c+13]=92;
+    x[r+6][c+14]='/';
+    x[r+6][c+16]='/';
+    x[r+6][c+17]=92;
+    x[r+6][c+19]=92;
+    x[r+6][c+21]='/';
+    x[r+6][c+23]='/';
+    x[r+6][c+29]=92;
+    x[r+6][c+31]=92;
+    x[r+6][c+33]='/';
+    x[r+6][c+35]='/';
+    x[r+6][c+36]=92;
+    x[r+6][c+38]=92;
+    x[r+6][c+39]='/';
+    x[r+6][c+41]='/';
+    x[r+6][c+44]='|';
+    x[r+6][c+46]='.';
+    x[r+6][c+52]='.';
+    x[r+7][c+9]=92;
+    x[r+7][c+11]='|';
+    x[r+7][c+13]='_';
+    x[r+7][c+15]='_';
+    x[r+7][c+16]=92;
+    x[r+7][c+17]='/';
+    x[r+7][c+18]='_';
+    x[r+7][c+20]='_';
+    x[r+7][c+22]=92;
+    x[r+7][c+23]='_';
+    x[r+7][c+24]=92;
+    x[r+7][c+25]='_';
+    x[r+7][c+27]='_';
+    x[r+7][c+29]='/';
+    x[r+7][c+30]='_';
+    x[r+7][c+31]='/';
+    x[r+7][c+32]='_';
+    x[r+7][c+34]='_';
+    x[r+7][c+35]=92;
+    x[r+7][c+36]='/';
+    x[r+7][c+37]='_';
+    x[r+7][c+39]='_';
+    x[r+7][c+41]=92;
+    x[r+7][c+42]='_';
+    x[r+7][c+43]='/';
+    x[r+8][c+11]=92;
+    x[r+8][c+14]='*';
+    x[r+8][c+17]='*';
+    x[r+8][c+20]='*';
+    x[r+8][c+24]=92;
+    x[r+8][c+26]=92;
+    x[r+8][c+27]='/';
+    x[r+8][c+29]='/';
+    x[r+8][c+32]='*';
+    x[r+8][c+35]='*';
+    x[r+8][c+38]='*';
+    x[r+8][c+41]='/';
+    
+        r +=20;
         c-=21;
         
         
@@ -7593,7 +7902,7 @@ int main() {
         enemy.dir=1;
         enemy.frames=0;
         enemy.health=10;
-        
+        char move;
         Enemy enemy2;
         enemy2.rb=66;
         enemy2.cb=640;
@@ -7605,12 +7914,10 @@ int main() {
         int ctBulletFrames=0;
         initializechar(x);
     while(!kbhit()){
+        
         initializechar(x);
         if(ctFrames<300){
             HomeScreen(x);
-   
-
-
         }
         else if (ctFrames==370){
             ctFrames=0;
@@ -7618,6 +7925,10 @@ int main() {
         printMapToScreen(x,0, 238, 0, 74);
         ctFrames++;
     }
+
+        usleep(1000000);
+
+
     for (;;) {
 
         move2='a';
@@ -7637,7 +7948,7 @@ int main() {
           
                         moveSnail(x, snail[j]);
                         checkSnail(x, hero, bullet, ctBullets, snail[j]);
-                        if(hero.cheroe+2==snail[j].cb-2){
+                        if(hero.cheroe>=snail[j].cb-5 ||( hero.rheroe < snail[j].rb-5 && hero.cheroe>=snail[j].cb-5 && hero.cheroe<=snail[j].cb+15)){
                             hero.health--;
                             hero.cherob-=10;
                             hero.cheroe-=10;
@@ -7733,7 +8044,7 @@ int main() {
             drawBlocker(x);
 
             
-//            drawLaser(x, laser);
+            drawLaser(x, laser);
             drawElevatorStand(x, elevator);
             moveElevator(x, elevator, hero);
             drawElevator(x, elevator);
@@ -7757,7 +8068,7 @@ int main() {
                     bat.cBullet=bat.c-3;
                         }
                     if(hero.inAirplane && bat.frames%5==0){
-//                        moveBulletBat(x, bat);
+                        moveBulletBat(x, bat);
                     }
                     
                     
@@ -7770,10 +8081,10 @@ int main() {
                     bat.frames=0;
                 }
                 bat.frames++;
-//                if(bat.rBullet<=hero.rherob-1 &&bat.rBullet+1>=hero.rheroe && bat.cBullet>=hero.cherob-2 &&bat.cBullet<=hero.cheroe+2){
-//                    hero.health--;
-//
-//                }
+                if(bat.rBullet<=hero.rherob-1 &&bat.rBullet+1>=hero.rheroe && bat.cBullet>=hero.cherob-2 &&bat.cBullet<=hero.cheroe+2){
+                    hero.health--;
+
+                }
                 
                 
              
@@ -7879,7 +8190,12 @@ int main() {
         if(hero.health==0){
             break;
         }
-        char move = getchar ();
+        
+        if(playerArrived(hero) && checkAllMobsDead(hero, bat, enemy, enemy2, snail, 4)){
+            break;
+        }
+
+         move = getchar ();
         
         if(move=='z' && ctBulletFrames<4){
             if(ctBullets>3){
@@ -7968,11 +8284,15 @@ int main() {
        
        
     }
-    while(move2 != 'y' && move2 != 'N'){
+    while(move2 != 'y' && move2 != 'n'){
         while (!kbhit()){
             initializechar(x);
             if(ctFrames<300){
+                if (hero.health==0)
                 GameOVer(x);
+               if (hero.health==5)
+                congrats(x);
+                
                 
             }
             else if (ctFrames==370){
